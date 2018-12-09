@@ -1,0 +1,235 @@
+\documentclass[oneside,openany]{jbook}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+
+\theoremstyle{definition}
+\newtheorem{axiom}{公理}
+\newtheorem{theorem}{定理}
+\newtheorem*{theorem*}{定理}
+\newtheorem{definition}{定義}
+\newtheorem*{definition*}{定義}
+\renewcommand\proofname{\bf 証明}
+\newtheorem{lemma}[theorem]{補題}
+\newtheorem{example}{例}[section]
+
+
+\title{解析入門}
+\author{Kazeto Fukasawa}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+
+\chapter{実数}
+\section{実数の定義}
+\subsection{体}
+
+\begin{definition}{(体)}
+
+集合$\mathbb{K}$の任意の二つの元$a, b \in \mathbb{K}$に対して，和$a+b$と積$ab$の二つの演算が定義され，以下の性質を満たす時，$\mathbb{K}$は体(Field)であると呼ぶ．
+
+
+\begin{description}
+\item{(F1)} $a + b = b + a$. (和の交換律)
+\item{(F2)} 任意の$a, b, c \in \mathbb{K}$について，$(a+b)+c = a+(b+c)$.(和の結合律)
+\item{(F3)} ある$0 \in \mathbb{K}$が存在して，任意の$a \in \mathbb{K}$について，$a+0=a$.(和の単位元の存在)
+\item{(F4)} 任意の$a \in \mathbb{K}$について，ある$-a \in \mathbb{K}$が存在して，$a + (-a)=0$となる.(和の逆元の存在)
+\item{(F5)} $ab = ba$.(積の交換律)
+\item{(F6)} 任意の$a,b,c \in \mathbb{K}$について，$(ab)c=a(bc)$.(積の結合律)
+\item{(F7)} ある$1 \in \mathbb{K}$が存在して，任意の$a \in \mathbb{K}$について$a1 = a$.(積の単位元の存在)
+\item{(F8)} $0$でない任意の$a \in \mathbb{K}$について，ある$a^{-1} \in \mathbb{K}$が存在して，$aa^{-1}=1$.(積の逆元の存在)
+\item{(F9)} 任意の$a,b,c \in \mathbb{K}$について，$a(b+c)=ab+ac$.(和と積の分配律)
+\item{(F10)} $1 \neq 0$.($0$以外の元の存在)
+\end{description}
+
+\end{definition}
+
+\begin{theorem}{(和の単位元の一意性)}\label{theorem:sum_identity_elem_unique}
+(F3)の和の単位元$0$は一意的である．
+\end{theorem}
+
+\begin{proof}
+ある$0^{\prime} \in \mathbb{K}$が存在して，任意の$a \in \mathbb{K}$について，$a+0^{\prime}=a$を満たし，かつ$0 \neq 0^{\prime}$となると仮定する．
+このとき，$0 \in \mathbb{K}$より$0^{\prime}$の性質から$0 + 0^{\prime} = 0$が成り立つ．一方で，$0^{\prime}  \in \mathbb{K}$より同様に$0$の性質から，$0^{\prime} + 0 = 0^{\prime}$である．また，F1より$0+0^{\prime}=0^{\prime}+0$であるため，$0=0+0^{\prime}=0^{\prime}+0=0^{\prime}$となり，$0=0^{\prime}$で矛盾である.
+従って，$\exists 0^{\prime} \in \mathbb{K} \forall a \in \mathbb{K}(a + 0^{\prime} = a) \land 0\neq0^{\prime}$を否定した$\lnot (\exists 0^{\prime} \in \mathbb{K} \forall a \in \mathbb{K}(a + 0^{\prime} = a) ) \lor 0 = 0^{\prime}$が成り立つ．(F3)より和の単位元は常に存在するため，$0 = 0^{\prime}$が常に成り立つ．
+\end{proof}
+
+\begin{theorem}
+$\forall a \in \mathbb{K} (0a = 0)$.
+\end{theorem}
+
+\begin{proof}
+(F3)で$a=0$とすると$0+0=0$であるため，$0a = (0 + 0)a$となる．ここで，(F9)の分配律を用いると，$0a = (0+0)a=0a+0a$である．$0a =0a+0a$は，(F3)より$0a$が$0a$和の単位元となっていることを意味する．定理\ref{theorem:sum_identity_elem_unique}より，和の単位元は一意的であるため，$0a = 0$が成り立つ．
+\end{proof}
+
+
+\subsection{全順序集合}
+
+\section{連続性の公理}
+\begin{definition}{(デデキントの切断)}
+
+$\mathbb{R}$を全順序集合である体とする．このとき，$\mathbb{R}$の部分集合の組$( A, B)$について以下が成り立つとき，$( A, B)$をデデキントの切断と呼ぶ．
+
+\begin{enumerate}
+\item $A \neq \emptyset \land B \neq \emptyset$．
+\item $A \cap B = \emptyset$．
+\item $A \cup B = \mathbb{R}$．
+\item $\forall a \in A \forall b \in B (a < b)$．
+\end{enumerate}
+
+\end{definition}
+
+\begin{axiom}{(デデキントの公理)}\label{axiom:d_axiom}
+
+デデキントの切断に対して，$A$の最大元と$B$の最小元の存在に関して，以下の4ケースが考えられる．
+
+\begin{enumerate}
+\item $A$の最大元が存在する $\land$ $B$の最小元が存在しない．
+\item $A$の最大元が存在しない $\land$ $B$の最小元が存在する．
+\item $A$の最大元が存在する $\land$ $B$の最小元が存在する．
+\item $A$の最大元が存在しない $\land$ $B$の最小元が存在しない．
+\end{enumerate}
+
+このとき，1,2のみに限る．
+\end{axiom}
+
+3.は$\mathbb{R}$が全順序集合である体であることから常に成り立たない．この公理は，4があり得ないことを仮定する．
+
+\begin{theorem}{($\mathbb{R}$の稠密性)}
+
+$\mathbb{R}$を全順序集合である体とする．このとき，$\mathbb{R}$は稠密である．
+\end{theorem}
+
+\begin{proof}
+任意の$a,b \in \mathbb{R}$($a < b$)について，$c=\frac{a+b}{2}$ととる．$\mathbb{R}$が体であることより，$c \in \mathbb{R}$であり，全順序集合であることからこの$c$にも順序関係が定義される．このときの順序は，$a < b \iff a + a < a + b \iff a = \frac{a + a}{2} < \frac{a + b}{2} = c$より$a < c$．同様に，$a < b \iff a + b < b + b \iff c = \frac{a + b}{2} < \frac{b + b}{2} = b$より$c < b$である．したがって任意の$a,b \in \mathbb{R}$($a < b$)について$a < c < b$となる$c$が存在するため，$\mathbb{R}$は稠密である．$\square$
+\end{proof}
+
+\begin{theorem}
+
+公理\ref{axiom:d_axiom}デデキントの切断の
+
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item $A$の最大元が存在する $\land$ $B$の最小元が存在する．
+\end{enumerate}
+は，常に成り立たない．
+\end{theorem}
+
+\begin{proof}
+3.が成り立つと仮定し，$A$の最大元を$a$，$B$の最小元を$b$とすると，$a=b$はありえない．$a \in A \land a \in B$となり切断の定義2. $A \cap B = \emptyset$．に反するからである．$a \neq b$のとき切断の定義4. より$a < b$である．$\mathbb{R}$の稠密性より$a < c < b$となる$c \in \mathbb{R}$が存在する．この$c$は$a < c$より$c \notin A$であり$c < b$より$c \notin B$である．これは切断の定義3. $A \cup B = \mathbb{R}$．に矛盾する．$\square$
+\end{proof}
+
+\begin{axiom}{(有界性公理)}
+$\mathbb{R}$を全順序集合である体とする．$\mathbb{R}$の任意の部分集合$A \subset \mathbb{R} (A \neq \emptyset)$について，$A$が上に有界（下に有界）ならば，上限$s = \sup A \in \mathbb{R}$(下限$s = \inf A$)が存在する．
+\end{axiom}
+
+
+\subsection{デデキントの公理と有界性公理の同値性}
+ここで，デデキントの公理と有界性公理が同値であることを示す．
+
+\subsubsection{デデキントの公理 $\Rightarrow$ 有界性公理}
+有界性公理の，上に有界な空でない任意の部分集合$A \subset \mathbb{R}$について，
+
+\begin{align}
+\begin{split}
+U = \{ u \in  \mathbb{R} | \forall a \in A ( a \leq u) \},\\
+L = U^{C} = \{ l \in \mathbb{R} | \exists a \in A ( a > l) \}.
+\end{split}
+\end{align}
+
+と定義する．$U$はAの上界であり，$L$はその補集合である．
+
+\begin{enumerate}
+\item $(L, U)$が切断である．
+\item $L$の最大元または$U$の最小元が$s = \sup A$となる．
+\item $L$の最大元は存在しない．
+\item $U$の最小元が$s = \sup A$となる．
+\end{enumerate}
+
+という順に示す．
+
+まずデデキントの切断であることを確認する．
+
+1. $L \neq \emptyset \land U \neq \emptyset$．
+
+$A$は有界であるため，ある$b \in \mathbb{R}$が存在し，$\forall a \in A (a \leq b)$となる．このとき，$b \in U$であるため$U \neq \emptyset$である．また，$A \neq \emptyset$の仮定より，ある$a \in A$がとれる．$a-1 \in \mathbb{R}$を考えると，$a-1 < a \in A$であり，これは$a-1 \in L$を意味する．従って$L \neq \emptyset$となる．
+
+2. $L \cap U = \emptyset$．
+$L$は$U$の補集合として定義しているため，$L \cap U = \emptyset$である．実際に，$L \cap U \neq \emptyset$とすると，$c \in L \cap U$がとれて，$c \in U$より$\forall a \in A (a \leq c)$である．一方で，$c \in L$より$\exists a \in A (a > c)$となり任意の$a$について$a \leq c$に矛盾する．従って$L \cap U = \emptyset$が示された．
+
+3. $L \cup U = \mathbb{R}$．
+$L=U^{C}$であったため，$U^{C} \cup U = \mathbb{R}$を示す．まず，$U, U^{C} \subset \mathbb{R}$より$U \cup U^{C} \subset \mathbb{R}$が成り立つ．実際に，任意の$u \in U \cup U^{C}$について，$u \in U$であるとき$U \subset \mathbb{R}$より$u \in \mathbb{R}$であり，$u \in U^{C}$のときも同様に$U^{C} \subset \mathbb{R}$より$u \in \mathbb{R}$であるため，$U \cup U^{C} \subset \mathbb{R}$が成り立つ．一方で，任意に$a \in \mathbb{R}$をとると，$a \in U$または$a \notin U$のいずれかが成り立つ．従って任意の$a \in \mathbb{R}$について，$$a \in \mathbb{R} \Rightarrow a \in \{ a | a \in U \lor a \notin U \} = \{ a | a \in U \} \cup \{ a | a \notin U \} = U \cup U^{C}$$より，$\mathbb{R} \subset U^{C} \cup U$．以上より$U^{C} \cup U = \mathbb{R}$が示された．
+
+4. $\forall a \in L \forall b \in U (a < b)$．
+任意に$a \in L$をとると，$a < c$となる$c \in A$が存在する．また，$U$の定義より任意の$c^{\prime} \in A$に対して，任意の$b \in U$は$c^{\prime} \leq b$が成り立つ．任意の$c^{\prime}$について成り立つため，$c$についても成り立ち，$a < c \leq b$となる．以上より，$\forall a \in L \forall b \in U (a < b)$が示された．
+
+1.2.3.4より，$(L, U)$は切断である．デデキントの公理より，$L$の最大元または$U$の最小元が存在する．
+
+$L$の最大元は存在しない
+$L$の最大元が存在すると仮定し，それを$s$とおく．このとき$s \in L$より$s < a \in A$となる$a$が存在する．$\mathbb{R}$の稠密性より，$s < b < a$となる$b \in \mathbb{R}$が存在し，$s$が$L$の最大元であることから，$b \in U$が成り立つ．しかし，$b < a$が任意の$a \in A$について$a \leq u$が成り立つという$U$の定義に反する．従って$L$の最大元は存在しない．
+
+$U$の最小元は$A$の上限
+$L$の最小元が存在しないため，デデキントの公理より$U$の最小元が存在する．$U$は$A$の上界の集合として定義されていたため，その最小元は$A$の上限である．従って$A$の上限が存在する．$\square$
+
+\subsubsection{有界性公理 $\Rightarrow$ デデキントの公理}
+
+まず，任意の切断$(L, U)$の$L$は上に有界である．もしも$L$が上に有界でないとすると，任意の$a \in \mathbb{R}$について$a < l$となる$l \in L$が存在し，$U = \emptyset$となるが，これは切断の定義2.に反する．
+
+この$L$に対して有界性公理より上限が存在する．$s = \sup L$とおくと，$s \in L$と$s \in U$の場合が考えられる．$s \in L$であるとき，$s$は$L$の最大元であり，$s \in U$であるとき，$s$は$U$の最小元であることを示す．
+
+$s \in L$のとき，$s$は$L$の上界の要素であることから，$\forall l \in L(l \leq s)$が成り立ち，仮定より$s \in L$であるため，$s$は$L$の最大元である．
+
+$s \in U$のとき，$\forall u \in U(s \leq u)$を示せば良い．任意の$\epsilon > 0$について，$s - \epsilon$は$s$が$L$の上限であることから，$L$に属する．つまり，$\forall x \in \mathbb{R}(x < s \Rightarrow x \in L)$が成り立ち，対偶をとると$\forall x \in \mathbb{R}(x \in U \Rightarrow x \geq s)$となる．従って$s$は$U$の最小元である．$\square$
+
+
+
+\begin{theorem}
+\label{theorem:monotonic_inc_conv}
+$\mathbb{R}上の，$上に有界な単調増加数列$\{ a_{n} \}$は収束する．
+\end{theorem}
+
+\begin{proof}
+$\{ a_{n} \}$が上に有界な単調増加数列であるとき，それを集合とみなした$A = \{ a_{n} | n \in \mathbb{N}\}$は，上に有界な$\mathbb{R}$の部分集合である．そのため，有界性公理より上限$s = \sup(A)$が存在する． \\
+$\epsilon > 0$を任意にとると，$s$が上限であることより，$s-\epsilon$は$A$の上界ではない． $s-\epsilon$が$A$の上界ではないとき，$s-\epsilon < a_{n_{0}} \leq s$ となるような$a_{n_{0}} \in A$が存在する． \\
+このとき，$\{ a_{n} \}$が単調増加数列であることを用いると，任意の$n_{0} \leq n$となる$n$について，
+$$s-\epsilon < a_{n_{0}} \leq a_{n}$$
+が成り立つ．また，$s$は上限であり任意の$a_{n} \in A$について$a_{n} \leq s$を満たすため，
+$$s-\epsilon < a_{n_{0}} \leq a_{n} \leq s$$
+が成り立つ．$\epsilon > 0$より右辺に$\epsilon$を足すと等号ではなくなり，
+$$s-\epsilon<a_{n}< s + \epsilon \iff  | a_{n} - s| < \epsilon$$
+となる．\\
+$\epsilon > 0$について$a_{n_{0}} \in A$が存在するとき，$\{ a_{n} \}$は$\mathbb{N} \to A$の全射とみなせるため，$a_{n_{0}}$に対応する$n_{0} \in \mathbb{N}$は存在する．\\
+最終的に，任意の$\epsilon > 0$について$n_{0} \in \mathbb{N}$が存在し，$n_{0} \leq n \Rightarrow  | a_{n} - s| < \epsilon$を満たす．これは，$\{ a_{n} \}$が$s$に収束することを意味する．
+\end{proof}
+
+\begin{theorem}{(アルキメデスの定理)}
+任意の二つの$a, b \in \mathbb{R}$について，$na > b$となる$n \in \mathbb{N}$が存在する．
+\end{theorem}
+
+\begin{proof}
+この定理は，$b$が数列$(na)_{n \in \mathbb{N}}$の上界ではないことを主張している．$b$が数列$(na)_{n \in \mathbb{N}}$の上界であると仮定すると，$(na)_{n \in \mathbb{N}}$は単調増加数列であるため，定理\ref{theorem:monotonic_inc_conv}よりある値$\alpha \in \mathbb{R}$に収束する．このとき，収束の定義より，$\forall \epsilon > 0 \exists  n_{0} \in \mathbb{N} (  n \geq n_{0} \Rightarrow | na - \alpha | < \epsilon )$が成り立つため，$n \geq n_{0}$のとき，
+
+\begin{align}
+\begin{split}
+\alpha - \epsilon < na,\\
+na < \alpha + \epsilon, 
+\end{split}
+\end{align}
+
+の両方が成り立つ．ここで$\epsilon = a$とすると，$n_{a} \in \mathbb{N}$が存在して，$n \geq n_{a}$のとき，
+
+\begin{align}
+\begin{split}
+\alpha - a < na,\\
+na < \alpha + a.
+\end{split}
+\end{align}
+
+1つ目の不等式の両辺に$2a$を足すと，$\alpha + a < (n+2)a$となり，$n_{a} < n+2$であるため，$n+2$は二つ目の不等式を満たし，$(n+2)a < \alpha + a$となり，これは矛盾である．したがって$b$は数列$(na)_{n \in \mathbb{N}}$の上界ではない．
+\end{proof}
+
+
+\end{document}
